@@ -7,7 +7,7 @@ output: slidy_presentation
 ```{r load packages, include = FALSE }
 library(here)
 ```
-#Preliminary remarks
+##Preliminary remarks
 
 I have to give thanks to Richard McElreath's well received book, <ins>Statistical Rethinking</ins>^[Richard McElreath (2020), Statistical Rethinking, CRC Press, URL: https://xcelab.net/rm/statistical-rethinking/],
 because of his clarity of writing, thinking, and teaching, I'm compelled to do my best to help new students learn the language of statistics without having massive backgrounds in math.

@@ -1,0 +1,114 @@
+---
+title: "Soda_can_worksheet"
+author: "Brian Holt"
+date: "January 8, 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##The dilemma
+
+A person claims that the reason they tap on the soda can's lid or openning is because it prevents an explosion.
+
+Set up an experiment using the scientific method to evaluate this claim.  
+
+
+##Vocabulary
+
+First, here is some vocabulary to fill out and consider:
+
+1. Independent Variable
+
+$\vspace{22pt}$
+
+2. Depedendent Variable
+
+$\vspace{22pt}$
+
+3. Confound Variable
+
+$\vspace{22pt}$
+
+4. Control Group
+
+$\vspace{22pt}$
+
+5. Hypothesis
+
+$\vspace{22pt}$
+
+6. Theory
+
+$\vspace{22pt}$
+
+7. Operational Definition
+
+$\vspace{22pt}$
+
+##How to tell a story about what is happening.
+
+Begin by just telling your partner what is happening.  Then, try to answer the following questions:
+
+What happens when a person taps on the can?  
+
+$\vspace{22pt}$
+
+What are the important variables?
+
+$\vspace{22pt}$
+
+What are the variables you are trying to measure?
+Use the terms from above
+
+$\vspace{22pt}$
+
+Do you need a control group, if so, what would it be?
+
+$\vspace{22pt}$
+
+\newpage
+
+##Control group
+
+Make a simple table that has 2 groups, your control group and your experimental group
+
+$\vspace{200pt}$
+
+##Establish your hypothesis
+
+###How to begin?
+
+Start by thinking that tapping does not work.
+If it is true that tapping on a can does not reduce fizz,
+what should you find?
+In other words, how will the two groups behave if tapping makes no difference? 
+
+$\vspace{50pt}$
+
+\newpage
+
+##Beginnings of an experiment
+
+You may begin to see where this is going, that you have conceptually some idea that if tapping on a can reduces fizz, you can set up a scenario that allows you to test that hypothesis.  
+
+##Item 3 of Mill's rule on causality
+
+You have to rule out other explanations.  
+What are some other ways that cause fizz to either increase or decrease in a soda can?  
+
+In other words, what other factors impact fizz?  
+There are a small number of them. 
+See if you can list them here:
+
+$\vspace{50pt}$
+
+##Dealing with competing variables
+
+Given this list of variables of influence, how do you rule them out?
+
+$\vspace{50pt}$
+
+
