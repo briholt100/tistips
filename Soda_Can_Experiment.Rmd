@@ -7,6 +7,8 @@ output: slidy_presentation
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+library(tidyverse)
 ```
 
 ##Introduction
@@ -14,11 +16,11 @@ knitr::opts_chunk$set(echo = TRUE)
 This is a simple thought experiment to demonstrate how to go through the steps of the scientific method.
 It's a silly example, that may have less relevance since soda bottles are more commonly sold in vending machines.
 
-But many of you may remember or have seen people prior to opening a soda can go through some sort of ritual of tapping on top of the soda can's openning.  
+But many of you may remember or have seen people prior to opening a soda can go through some sort of ritual of tapping on top of the soda can's opening.  
 
 ##The dilemma
 
-A person claims that the reason they tap on the soda can's lid or openning is because it prevents an explosion.
+A person claims that the reason they tap on the soda can's lid or opening is because it prevents an explosion.
 
 ![boom](https://media.giphy.com/media/58lJYJvosSVnW/giphy.gif)
 
@@ -41,19 +43,47 @@ But it is the subject of what we do in an experiment.
 
 ---
 
-Turn to page 1 of your worksheet
+Turn to page 1 of your worksheet and write out the definitions.
+
+When you are finished just wait a bit for others to catch up.
+If your neighbors are still working, you can help if they ask.  
 
 ---
 
 ##Story Telling
 
-How to tell a story?  Begin with the players and the problem.
+On Page 2 of your worksheet, think about narratives. 
 
-In this case, what is apparently causing what?  
+How to tell a story?  
 
-##Groups
+Begin with the players and the problem.
 
-By now I hope you have come to some understanding that you should have 2 groups, a control group and an experimental
+In this case, what is apparently causing what?
+
+Again, work on this individually but if others around you finish you can ask for help.  Feel free to offer help, as well.  
+
+But don't just give it...giving unsolicited help, well, therein lie dragons. 
+
+
+##A plausible story
+
+I'm avoiding chemistry and physics,
+and just focusing on whether tapping on a can prevents fizz.  
+
+So, maybe tapping on the can allows bubble in the soda to move to the top of the can so when the can is opened, the gas in the bubbles can escape with little mess.
+
+The story is saying implying the gas is distributed throughout a shooken can. 
+
+It is also implying that tapping on a can can move these gases around.  
+
+If so, then if we tap on the some cans that have been shaken, but do not tap on other shooken cans, then we should see one of these groups produce more fizz than the other.  
+
+
+##Groups or conditions.
+
+On Page 3 of the worksheet....
+
+By now I hope you have come to some understanding that you should have 2 groups, a control group and an experimental group.
 
 One way that this is helped is by putting things into tables:
 
@@ -63,10 +93,16 @@ tabl <- "
 
 | Control| Exper | 
 |:-----:|:-----:|
-|  10 cans| 10 cans  |
+|  'n' cans| 'n' cans  |
 "
 cat(tabl) # output the table in a format good for HTML/PDF/docx conversion
 ```
+
+In fact, I can't help myself in not thinking in some sort of tables.
+If you go down the path of getting into science and research, 
+you may find that the creation of hypotheses lead you to thinking about how to organize data.
+
+Continuing on page 3 to hypotheses
 
 ---
 
@@ -80,22 +116,41 @@ And we often begin with at lest 2:
 
 1. The Null Hypothesis  
 
-\[H_0: X= Y \]
+\[H_0: \hspace{5pt} X \hspace{5pt}= \hspace{5pt}Y \]
 
 2. The Experimental Hypothesis (also known as the Alternative Hypo. )
 
-\[H_a: X != Y \]
+\[H_a: \hspace{5pt} X \hspace{5pt} != \hspace{5pt}Y \]
+
+note that != means not equal
 
 Why do we make this sort of hypothesis? Why the Null? 
 
-##Varialbes of influence
+##The Null
+
+The Null is a statement that there is no effect. 
+In our case, the Null is saying that tapping has no effect on fizz, or more precisely:
+\[H_0: X \hspace{5pt} = \hspace{5pt} Y \]
+
+or it can also be said like this:
+
+\[H_0: X \hspace{5pt} - \hspace{5pt} Y \hspace{5pt} = \hspace{5pt} 0\]
+
+What is the X varialbe, and what is the Y variable?  
+
+Are these the only variables that are important?
+Can any other variables influence gas bubbles in the can?
+
+Move on to page 4 of the worksheet.
+
+##Variables of influence
 
 Here is my list:
 
 1. Temperature
-2. Agitation (how much is it shaken)
+2. Agitation (how much is the can shaken)
 3. Brand  (root beer vs mountain dew)
-4. Bottling  (I think this isn't as important, like "made on" dates)
+4. Bottling  (I think this is not that important; like "made on" dates)
 5. Time between agitation and open (this is important)
 6. How does one tap on the can
 7. Where does one tap on the can
@@ -108,7 +163,7 @@ Here is my list:
 
 ##Control of experiment
 
-This is not the same as a contrl group.
+This is not the same as a control group.
 A control group is the basis for comparison.
 In more complicated phenomena, the choice of a control group may be very difficult. 
 
@@ -120,20 +175,199 @@ So, what should we do?  Well, make it so each of our variables has the same valu
 
 ##Controlling these other variables
 
-1. Temperature                 Keep in same fridge
-2. Agitation                   Need a device or method
-3. Brand                       Use same
-4. Bottling                    Pick same date  
-5. Time b/w agitate/open       Need a device or method
-6. tap on the can              Need a device or method  
-7. Where tap                   Need a device or method
-8. For how long tap            Need a device or method
-9. How open the can            Need a device or method
-10. Full moon?                 Really?
-11. Altitude?                  Do experiment in same loc
+```{r make confound table, echo=F}
+var = c('Temperature','Agitation','Brand','Bottling','Time b/w agitate & open','Time tap on the can','Where tap','For how long tap','How open the can','Full moon?', 'Altitude?')
+method <- c('Keep in same fridge','Need a device or method','Use same','Pick same date','Need a device or method','Need a device or method','Need a device or method','Need a device or method','Need a device or method','Really?','Do experiment in same loc')
+
+vocab.df<- data.frame(var,method)
+
+knitr::kable(vocab.df,align = rep('l',5))
+
+
+```
+
+##Do the experiment
+
+What are the independent and dependent variables in our little experiment?
+
+Our story looks something like Tappying causes changes in fizz.  
+
+So here is where some understanding of math and measurement comes in handy. 
+
+Tapping can be measured in a few different ways.
+You could say that tapping is a present or not present situation.
+We might say it is dichotomous.  
+
+The fizz, however, could be the same.
+It could be present or not present. 
+But it could also be meaured as an amount, or a volume.  
+
+##Experiment with fizz as a dichotomous variable
+
+Let's say we run the experiment and just note whether a soda can upon opening fizzes, or not.
+
+```{r binomal soda data, echo=F}
+
+tap <- c(0,0,0,0,1,0,0,1,1,0)
+NoTap <- c(1,1,1,1,1,0,1,1,1,0)
+
+binomial.tap.df<- data.frame(tap,NoTap)
+
+binomial.tap.df %>% 
+  gather(key='condition',value= "fizz") %>% 
+  group_by(condition) %>% 
+  summarise(count_of_fizz=sum(fizz)) %>% t()
+
+```
+
+Does tapping work?  
+
+Well, here is where stats can come to the rescue.
+If our results were 100% 'no fizz' in the tapping group and 'all fizz' in the no tapping, then maybe we don't even need stats.  
+
+But this is rare. 
+
+To think about this, we might consider the problem is much like a coin toss.
+And this is useful because we have a lot of knowledge about predicting coin flips.  
+
+##Coin flip example
+
+If we flip a coin 10 times, or if we have 10 coins and flip them once, what is the chance that we'll have 10 heads or 10 tails?
+
+Here is a quick simulation of 10 coin flips (assuming a fair coin of .5)
+where the 'one' (1) represents heads and a zero (0) is tails.  
+
+```{r simulate a single binomial outcome, echo=T}
+
+x<- rbinom(10,1,.5)
+x
+```
+
+If we count up the number of heads and divide by the number of flips, we get `r sum(x)/10`.  
+
+How many of you were expecting exactly .5?
+Since this is a random process, we won't always get .5.
+
+You may understand that if we did this many times, we'd get variations of these percentages but that they should be close to .5
+
+Can we try that?
+
+
+##Plotting of many simulated coin tosses
+
+Let's say I build a random coin flipper and flip it many times.
+Here is some output:
+
+```{r simulate many binomial outcomes, echo=F}
+
+flip <- function(n=10){
+  x<- rbinom(n,1,.5)
+ # print(x)
+  return(sum(x))
+  }
+
+
+#flip(20)
+sims <- 1000
+flip.df <- data.frame(matrix(ncol=2,nrow=sims))
+colnames(flip.df) <- c('NoTap','Tap')
+
+for (i in 1:sims){
+  flip.df[i,1]<-flip(10)
+  flip.df[i,2]<-flip(10)
+}
+
+head(flip.df)
+#nrow(flip.df)
+```
+
+So, this is just the top 6 simulations out of a `r sims` simulations.
+Each row has two simulations of flipping a coin 10 times.
+
+It's like our soda experiment, but we are doing it many times.
+And it's random.
+So it is a way for us to think about what we should expect to get if our experiment were just random chance.  
+
+It's like asking this question:  Our experiment found a 8 vs 3 fizzes.  How often would we find that difference if this was all just random? 
+
+
+##Counting the number of 8 vs 3
+
+How many times did this random simulation match our No Tap condition of 8 and Tap condition of 3? 
+
+```{r counting 8 and 3, echo=F}
+count <- data.frame(matrix(nrow=100,ncol=1))
+colnames(count) <- c("count")
+for (i in 1:nrow(flip.df)){
+  if(flip.df[i,1]>=8 & flip.df[i,2]<=3)
+  {count[i,1] <- 1}
+  else {count[i,1] <- 0}
+}
+
+head(count$count,20)
+```
+
+Not too often.
+If I sum the data from behind the scenes, I get just `r sum(count$count)` out of `r sims`.  
+
+Now let's count the number of times a difference of 5 or bigger is found.  Here are all the differences in the simulation.
+
+```{r counting differences, echo=F}
+count <- data.frame(matrix(nrow=100,ncol=1))
+colnames(count) <- c("count")
+for (i in 1:nrow(flip.df)){
+  count[i,1] <- flip.df[i,1] - flip.df[i,2]
+}
+
+head(count,10)
+```
+
+Let's plot all the differences on the next slide.
+
+##Plotting these simulations
+
+```{r plot binomial simulations, echo=F,fig.dim=c(5,3),message=F}
+
+count %>% ggplot(aes(x=count))+geom_histogram()+labs(title = 'Count of differences between groups')
+
+```
+
+What does this graph mean?
+Each bar is a count of how frequently a difference between these two groups occurred in each simulation.
+
+Not surprisingly, most of the time we found a simulation that was around 0, or there was no differences between the groups.  This is because we created it that way. We assumed no difference, or a 50/50 chance for either a 0 or 1.
+
+How often did we find a difference greater than 5?  
+
+Well, `r length(count[count$count>=5,])`.  I just used the computer to do this for me. 
+
+This was the number of times in our random simulations that we found a difference greater than 5.  That's not very often. 
+
+##Back to the can
+
+What can this tell us about our soda can experiment?
+
+Well, we had the following
+
+```{r binomal soda data part 2, echo=F}
+binomial.tap.df %>% 
+  gather(key='condition',value= "fizz") %>% 
+  group_by(condition) %>% 
+  summarise(count_of_fizz=sum(fizz)) %>% t()
+
+```
+
+But then we just made up some random simulations.
+And out of those `r sims` simulations we found `r length(count[count$count>=5,])` events that matched our little soda can experiment: `r (count[count$count>=5,])`
+
+This is saying that out of a `r sims ` simulations, it is uncommon to find a difference of 5 or larger randomly.  In fact, it's simply 
+
+\[\frac{diff's >= 5}{sims}\] 
+
+or `r length(count[count$count>=5,])/sims `.
+
+In other words, the chances of finding this size difference is `r length(count[count$count>=5,])/sims `.
 
 
 
----
-
-
+##Experiment with fizz as an amount
