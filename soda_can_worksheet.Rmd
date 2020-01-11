@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ##The dilemma
 
-A person claims that the reason they tap on the soda can's lid or openning is because it prevents an explosion.
+A person claims that the reason they tap on the soda can's lid or opening is because it prevents an explosion.
 
 Set up an experiment using the scientific method to evaluate this claim.  
 
@@ -24,7 +24,7 @@ First, here is some vocabulary to fill out and consider:
 
 $\vspace{22pt}$
 
-2. Depedendent Variable
+2. Dependent Variable
 
 $\vspace{22pt}$
 
@@ -69,11 +69,18 @@ Do you need a control group, if so, what would it be?
 
 $\vspace{22pt}$
 
+What is a plausible story that explains, or predicts that tapping on a can works?
+
+$\vspace{22pt}$
+
+
 \newpage
 
 ##Control group
 
-Make a simple table that has 2 groups, your control group and your experimental group
+Make a simple table that has 2 groups, 
+your control group and your experimental group 
+and include how many subjects you'll need.  
 
 $\vspace{200pt}$
 
@@ -88,11 +95,24 @@ In other words, how will the two groups behave if tapping makes no difference?
 
 $\vspace{50pt}$
 
+Try to then write out the hypothesis 
+as described on the overhead using the instructor's notation.
+
 \newpage
 
 ##Beginnings of an experiment
 
 You may begin to see where this is going, that you have conceptually some idea that if tapping on a can reduces fizz, you can set up a scenario that allows you to test that hypothesis.  
+
+We are working on John Stuart Mill's point 3 right now:
+
+>In order to say that something causes something else you need the following:
+>
+> 1. Covariation, the cause and effect have to be related.
+>
+>2. Time precedence of the cause, the cause had to precede the effect in time; and
+>
+>3. No plausible alternative explanation of the effect. 
 
 ##Item 3 of Mill's rule on causality
 
@@ -110,5 +130,7 @@ $\vspace{50pt}$
 Given this list of variables of influence, how do you rule them out?
 
 $\vspace{50pt}$
+
+\newpage
 
 

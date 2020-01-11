@@ -1,4 +1,4 @@
----
+$\hspace{20pt}$ ---
 title: 'Intro Stats to Intro Psych Students'
 author: "Brian Holt"
 date: "January 3, 2020"
