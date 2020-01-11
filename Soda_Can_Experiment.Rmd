@@ -92,6 +92,8 @@ Why do we make this sort of hypothesis? Why the Null?
 
 Here is my list:
 
+| variable                                                             |
+|:--------------------------------------------------------------------:|
 1. Temperature
 2. Agitation (how much is it shaken)
 3. Brand  (root beer vs mountain dew)
@@ -103,6 +105,7 @@ Here is my list:
 9. How does one open the can
 10. Full moon?
 11. Altitude?
+|---------------------------------------------------------------------|
 
 \newpage
 
