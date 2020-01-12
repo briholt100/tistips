@@ -1,0 +1,122 @@
+---
+title: "Correlation TIPS"
+author: "Brian Holt"
+date: "January 9, 2020"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+library(knitr)
+```
+
+
+##Correlations
+
+A correlation is a mathematical relationship between 2 or more varialbes--Usually we begin with just 2: an "X" and a "Y".
+
+The name gives you a hint:  $\hspace{20pt}$  <ins>Co$\hspace{10pt}$Relation</ins>
+
+A correlation tells you have variables move with each other. 
+
+We'll talk more about this movement soon.
+
+
+
+
+
+
+
+First some Vocab:
+
+##Necessary Vocabulary
+
+```{r table of vocab, echo=F}
+Vocab <- c("Variable",'Positive','Negative','Zero','Strength:')
+Def <- c('A phenomenon of interest that can take on many values--in other words, it varies','A type of correlation where variables move in the same direction', 'A type of correlation where variables move in the opposite direction', 'As one variable moves, the other does not reliably move in any one direction', 'Weak correlations are close to zero, while strong correlations are close to 1.')
+vocab.df<- data.frame(Vocab,Def)
+
+knitr::kable(vocab.df,align = rep('l',5))
+
+
+```
+
+##Graphical example of different correlations
+
+Here is some data I gleaned from Wikipedia on heights and weights across the world. 
+
+```{r make data,echo=F}
+
+
+x <- rnorm(1000,135,16) #average weight is 135 pounds
+y <- x*rnorm(1,5,3.5) #average height is 67 inches
+```
+
+I'm just showing the first 6 data points out of 1000.
+
+```{r correlation data, echo=F}
+head(data.frame('weight'=round(x,1),'height'=round(y,1)))
+
+```
+
+---
+
+Surprisingly to me, the correlation was very weak, close to zero. The scatter plot looks like a big circle, which is a visual reason we call them "Zero" Correlations.  The other is that the literal correlation is close to zero, in this case r = `r round(cor(x,y),3)`.  
+
+
+```{r world height weight graph,echo=F}
+wwh <- data.frame('weight'=x,'height'=y)
+wwh %>% ggplot(aes(weight,height))+
+  geom_point(alpha=.4,color='blue',shape=20)+
+  labs(title="Simulated Heights and Weights from \nIndividuals around the World")
+             
+```
+
+
+```{r scale then correlation graphs, include=F, fig.height=4,fig.width=4}
+x.s<- scale(x)
+y.s<- scale(y)
+cor(x.s,y.s)
+plot(x.s,y.s,xlab = "Weight",ylab = "Height",main = "world heights and weights")
+abline(lm(y.s~x.s)$coefficients)
+
+```
+
+
+##Generic graphs of a correlation
+
+###Positive Correlation
+
+```{r make general data for positive,echo=F, fig.height=4,fig.width=4}
+x <- rnorm(100,10,1) 
+y <- (x+rbeta(100,1,2))
+
+plot(x,y,type='n',xaxt='n',yaxt='n',xlab = "X",ylab="Y", main = "Positive Correlation")
+abline(lm(y~x)$coefficients)
+
+cor(x,y)
+```
+
+##Negative Correlation
+
+```{r make general data for negative,echo=F, fig.height=4,fig.width=4}
+x <- rnorm(100,10,1) 
+y <- -1*(x+rbeta(100,1,2))
+
+plot(x,y,type='n',xaxt='n',yaxt='n',xlab = "X",ylab="Y", main = "Negative Correlation")
+abline(lm(y~x)$coefficients)
+
+cor(x,y)
+```
+
+##Caveat about correlation
+
+The real problem is that we use correlations to imply causation.  You've heard of the cliche:
+
+Correlation is not causation.
+
+That's actually not true.  Every Causal relation has a correlation.  
+
+It is more accurate to say correlation does not <ins>imply</ins> causation.
