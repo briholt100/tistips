@@ -269,9 +269,14 @@ flip <- function(n=10){
   return(sum(x))
   }
 
+flip.samp <- function(n=10){
+  x<- sample(c(0,1),n,prob=c(.5,.5),replace = T)
+ # print(x)
+  return(sum(x))
+  }
 
 #flip(20)
-sims <- 1000
+sims <- 10000
 flip.df <- data.frame(matrix(ncol=2,nrow=sims))
 colnames(flip.df) <- c('NoTap','Tap')
 
@@ -298,8 +303,8 @@ It's like asking this question:  Our experiment found a 8 vs 3 fizzes.  How ofte
 
 How many times did this random simulation match our No Tap condition of 8 and Tap condition of 3? 
 
-```{r counting 8 and 3, echo=F}
-count <- data.frame(matrix(nrow=100,ncol=1))
+```{r counting more extreme than 8 and 3, echo=F}
+count <- data.frame(matrix(nrow=sims,ncol=1))
 colnames(count) <- c("count")
 for (i in 1:nrow(flip.df)){
   if(flip.df[i,1]>=8 & flip.df[i,2]<=3)
@@ -308,6 +313,15 @@ for (i in 1:nrow(flip.df)){
 }
 
 head(count$count,20)
+sum(count$count)
+
+flip.df[flip.df$NoTap>=8 & flip.df$Tap<=3,]
+
+
+nrow(flip.df[flip.df$NoTap>=8,])/10000
+sum(dbinom(10:8,10,prob=.5))
+nrow(flip.df[flip.df$NoTap<=3,])/10000
+sum(dbinom(3:0,10,prob=.5))
 ```
 
 Not too often.

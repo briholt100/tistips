@@ -48,29 +48,37 @@ knitr::kable(vocab.df,align = rep('l',5))
 Here is some data I gleaned from Wikipedia on heights and weights across the world. 
 
 ```{r make data,echo=F}
+library(rethinking)
+data(Howell1)
+d <- Howell1
+head(d)
+d.1<- d[d$age>17,]
+hw.lm<- lm(d.1$height~d.1$weight)
 
-
-x <- rnorm(1000,135,16) #average weight is 135 pounds
-y <- x*rnorm(1,5,3.5) #average height is 67 inches
+#weight 1 pound is 0.4535924 kg
+#height 1 inch is 2.54 cm
+x <- rnorm(1000,135*0.4535924,16*0.4535924) #average weight is 135 pounds
+y <- x*hw.lm$coefficients[2]+hw.lm$coefficients[1]
+df.hw <- data.frame(x,y+rnorm(1000,5,5))
+colnames(df.hw) <- c('weight','height')
 ```
 
 I'm just showing the first 6 data points out of 1000.
 
 ```{r correlation data, echo=F}
-head(data.frame('weight'=round(x,1),'height'=round(y,1)))
+head(df.hw)
 
 ```
 
 ---
 
-Surprisingly to me, the correlation was very weak, close to zero. The scatter plot looks like a big circle, which is a visual reason we call them "Zero" Correlations.  The other is that the literal correlation is close to zero, in this case r = `r round(cor(x,y),3)`.  
+The correlation of this simulated data is `r round(cor(df.hw),3)`.  You can see there is a lot of spread but that you could imagine a line going through.
 
 
 ```{r world height weight graph,echo=F}
-wwh <- data.frame('weight'=x,'height'=y)
-wwh %>% ggplot(aes(weight,height))+
+df.hw %>% ggplot(aes(weight,height))+
   geom_point(alpha=.4,color='blue',shape=20)+
-  labs(title="Simulated Heights and Weights from \nIndividuals around the World")
+  labs(title="Simulated Heights and Weights from \nIndividuals around the World")+geom_smooth(method = 'lm', color = 'red')
              
 ```
 
@@ -91,7 +99,7 @@ abline(lm(y.s~x.s)$coefficients)
 
 ```{r make general data for positive,echo=F, fig.height=4,fig.width=4}
 x <- rnorm(100,10,1) 
-y <- (x+rbeta(100,1,2))
+y <- (x+rnorm(100,0,8))
 
 plot(x,y,type='n',xaxt='n',yaxt='n',xlab = "X",ylab="Y", main = "Positive Correlation")
 abline(lm(y~x)$coefficients)
@@ -103,7 +111,7 @@ cor(x,y)
 
 ```{r make general data for negative,echo=F, fig.height=4,fig.width=4}
 x <- rnorm(100,10,1) 
-y <- -1*(x+rbeta(100,1,2))
+y <- -1*(x+rnorm(100,0,8))
 
 plot(x,y,type='n',xaxt='n',yaxt='n',xlab = "X",ylab="Y", main = "Negative Correlation")
 abline(lm(y~x)$coefficients)
