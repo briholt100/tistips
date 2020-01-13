@@ -256,7 +256,7 @@ Does this seem reasonable?
 
 What if we did it again? 
 
----
+#Another coin flip
 
 ```{r simulate a 2nd single binomial outcome, echo=T}
 x1<- rbinom(n_flips,1,.5)
@@ -270,18 +270,17 @@ If we count up the number of heads and divide by the number of flips, we get `r 
 How many of you were expecting exactly .5?
 Since this is a random process, we won't always get .5.
 
-Here is a quick graph to show you the count of 'heads' in these two trials:
+#Graphing these counts
 
-```{r graph two trials binomial outcome, echo=F,fig.dim=c(6,3),message=F}
+Here is a quick table and graph to show you the count of 'heads' in these two trials:
+
+```{r graph two trials binomial outcome, echo=F,fig.dim=c(6,3),message=F,warning=F}
 x.x1<- tibble(x,x1)
-x.x1
+(x.x1)
 
-x.x1 %>% gather(trial,value) %>% group_by(trial)  %>% 
-  ggplot(aes(x=trial,fill=trial,color=trial))+ geom_histogram(stat = 'count')#+facet_grid(~trial)
-#+
- #   theme(axis.title.x=element_blank(),
-  #      axis.text.x=element_blank(),
-   #     axis.ticks.x=element_blank())
+x.x1 %>% gather(trial,value) %>% group_by(trial)  %>% summarise(total_Heads=sum(value)) %>% 
+  ggplot(aes(x=trial,y=total_Heads))+ geom_point(color='blue')+ylim(0,4)
+
 ```
 
 You may understand that if we did this many times, we'd get variations of these percentages but that they should be close to .5
@@ -289,10 +288,11 @@ You may understand that if we did this many times, we'd get variations of these 
 Can we try that?
 
 
-#Plotting of many simulated coin tosses
+#Plotting of many simulated soda can experiments
 
-Let's say I build a random coin flipper and flip it many times.
-Here is some output:
+Let's say I build a machine that can do the soda can experiment many times.  And lets say I use 10 cans for each condition, the NoTap and Tap.
+
+(It's just like doing coin tosses.  )
 
 ```{r simulate many binomial outcomes, echo=F}
 
@@ -318,23 +318,25 @@ for (i in 1:sims){
   flip.df[i,2]<-flip(10)
 }
 
-head(flip.df)
+head(flip.df,3)
 #nrow(flip.df)
 ```
 
-So, this is just the top 6 simulations out of a `r sims` simulations.
-Each row has two simulations of flipping a coin 10 times.
+So, this is just the top 3 simulations out of a `r sims` simulations.
+Each row has two simulations of flipping shaking a can 10 times.  
 
-It's like our soda experiment, but we are doing it many times.
-And it's random.
-So it is a way for us to think about what we should expect to get if our experiment were just random chance.  
+The first row in the "NoTap"" group had `r flip.df[1,1]` cans that fizzed.
 
-It's like asking this question:  Our experiment found a 8 vs 3 fizzes.  How often would we find that difference if this was all just random? 
+Of course it's random and gives us a way to think about what we should expect to get if our experiment were just random chance.  
+
+It's like asking this question:  Our experiment found 8 vs 3 fizzes in the No Tap and Tap groups, respectively.  How often would we find that difference if this was all just random? 
 
 
 #Counting the number of 8 vs 3
 
-How many times did this random simulation match our No Tap condition of 8 and Tap condition of 3? 
+How many times did this random simulation create an event that matched our example of 8 versus 3 fizzing in the "No Tap" vs "Tap" groupings?
+
+Here is the first 5 counts.  
 
 ```{r counting more extreme than 8 and 3, echo=F}
 count <- data.frame(matrix(nrow=sims,ncol=1))
@@ -345,20 +347,30 @@ for (i in 1:nrow(flip.df)){
   else {count[i,1] <- 0}
 }
 
-head(count$count,20)
-sum(count$count)
-
-flip.df[flip.df$NoTap>=8 & flip.df$Tap<=3,]
-
-
-nrow(flip.df[flip.df$NoTap>=8,])/10000
-sum(dbinom(10:8,10,prob=.5))
-nrow(flip.df[flip.df$NoTap<=3,])/10000
-sum(dbinom(3:0,10,prob=.5))
+cbind(flip.df[1:5,],head(count$count,5))
+#head(flip.df[flip.df$NoTap>=8 & flip.df$Tap<=3,])
 ```
 
-Not too often.
-If I sum the data from behind the scenes, I get just `r sum(count$count)` out of `r sims`.  
+Let me count up the number of times this happened and just give a quick summary.
+
+```{r, counting the number of 8v3, echo=F}
+
+sum(count$count)
+nrow(flip.df[flip.df$NoTap>=8,])/10000 #NoTap >= 8
+d.8 <- sum(dbinom(10:8,10,prob=.5))
+nrow(flip.df[flip.df$NoTap<=3,])/10000
+d.3 <- sum(dbinom(3:0,10,prob=.5))
+
+d.8*d.3
+```
+
+Not too often. Out of `r sims`, there were just `r sum(count$count)` times that our NoTap had 8 or more fizzes and our Tap condition 3 or less fizzes.
+
+This means that if our null is true (that Tapping has no effect), then we would expect to find an out come (8 or more vs 3 or less) about `r sum(count$count)/sims` percent of time.
+
+By the way, this is wha a "p-value" for those who have already taken stats. 
+
+#A different way of counting...the difference between the groups
 
 Now let's count the number of times a difference of 5 or bigger is found.  Here are all the differences in the simulation.
 
