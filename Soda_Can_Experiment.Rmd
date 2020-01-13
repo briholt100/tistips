@@ -2,7 +2,9 @@
 title: "Soda Can experiment"
 author: "Brian Holt"
 date: "January 8, 2020"
-output: slidy_presentation
+output: 
+  slidy_presentation:
+    font_adjustment: +3
 ---
 
 ```{r setup, include=FALSE}
@@ -11,14 +13,14 @@ library(knitr)
 library(tidyverse)
 ```
 
-##Introduction
+#Introduction
 
 This is a simple thought experiment to demonstrate how to go through the steps of the scientific method.
 It's a silly example, that may have less relevance since soda bottles are more commonly sold in vending machines.
 
 But many of you may remember or have seen people prior to opening a soda can go through some sort of ritual of tapping on top of the soda can's opening.  
 
-##The dilemma
+#The dilemma
 
 A person claims that the reason they tap on the soda can's lid or opening is because it prevents an explosion.
 
@@ -50,7 +52,7 @@ If your neighbors are still working, you can help if they ask.
 
 ---
 
-##Story Telling
+#Story Telling
 
 On Page 2 of your worksheet, think about narratives. 
 
@@ -65,7 +67,7 @@ Again, work on this individually but if others around you finish you can ask for
 But don't just give it...giving unsolicited help, well, therein lie dragons. 
 
 
-##A plausible story
+#A plausible story
 
 I'm avoiding chemistry and physics,
 and just focusing on whether tapping on a can prevents fizz.  
@@ -79,7 +81,7 @@ It is also implying that tapping on a can can move these gases around.
 If so, then if we tap on the some cans that have been shaken, but do not tap on other shooken cans, then we should see one of these groups produce more fizz than the other.  
 
 
-##Groups or conditions.
+#Groups or conditions.
 
 On Page 3 of the worksheet....
 
@@ -106,7 +108,7 @@ Continuing on page 3 to hypotheses
 
 ---
 
-##Hypotheses
+#Hypotheses
 
 So, when doing research it is important to establish guidelines to help decide when you have actually found something.
 
@@ -116,25 +118,25 @@ And we often begin with at lest 2:
 
 1. The Null Hypothesis  
 
-\[H_0: \hspace{5pt} X \hspace{5pt}= \hspace{5pt}Y \]
+\[H_0: \hspace{5pt} Group_1 \hspace{5pt}= \hspace{5pt}Group_2 \]
 
 2. The Experimental Hypothesis (also known as the Alternative Hypo. )
 
-\[H_a: \hspace{5pt} X \hspace{5pt} != \hspace{5pt}Y \]
+\[H_a: \hspace{5pt} Group_1 \hspace{5pt} != \hspace{5pt}Group_2 \]
 
 note that != means not equal
 
 Why do we make this sort of hypothesis? Why the Null? 
 
-##The Null
+#The Null
 
 The Null is a statement that there is no effect. 
 In our case, the Null is saying that tapping has no effect on fizz, or more precisely:
-\[H_0: X \hspace{5pt} = \hspace{5pt} Y \]
+\[H_0: Group_1 \hspace{5pt} = \hspace{5pt} Group_2 \]
 
 or it can also be said like this:
 
-\[H_0: X \hspace{5pt} - \hspace{5pt} Y \hspace{5pt} = \hspace{5pt} 0\]
+\[H_0: Group_1 \hspace{5pt} - \hspace{5pt} Group_2 \hspace{5pt} = \hspace{5pt} 0\]
 
 What is the X varialbe, and what is the Y variable?  
 
@@ -143,7 +145,7 @@ Can any other variables influence gas bubbles in the can?
 
 Move on to page 4 of the worksheet.
 
-##Variables of influence
+#Variables of influence
 
 Here is my list:
 
@@ -160,11 +162,11 @@ Here is my list:
 9. How does one open the can
 10. Full moon?
 11. Altitude?
-|---------------------------------------------------------------------|
+
 
 \newpage
 
-##Control of experiment
+#Control of experiment
 
 This is not the same as a control group.
 A control group is the basis for comparison.
@@ -176,7 +178,7 @@ So, what should we do?  Well, make it so each of our variables has the same valu
 
 ---
 
-##Controlling these other variables
+#Controlling these other variables
 
 ```{r make confound table, echo=F}
 var = c('Temperature','Agitation','Brand','Bottling','Time b/w agitate & open','Time tap on the can','Where tap','For how long tap','How open the can','Full moon?', 'Altitude?')
@@ -189,7 +191,7 @@ knitr::kable(vocab.df,align = rep('l',5))
 
 ```
 
-##Do the experiment
+#Do the experiment
 
 What are the independent and dependent variables in our little experiment?
 
@@ -205,7 +207,7 @@ The fizz, however, could be the same.
 It could be present or not present. 
 But it could also be meaured as an amount, or a volume.  
 
-##Experiment with fizz as a dichotomous variable
+#Experiment with fizz as a dichotomous variable
 
 Let's say we run the experiment and just note whether a soda can upon opening fizzes, or not.
 
@@ -219,8 +221,9 @@ binomial.tap.df<- data.frame(tap,NoTap)
 binomial.tap.df %>% 
   gather(key='condition',value= "fizz") %>% 
   group_by(condition) %>% 
-  summarise(count_of_fizz=sum(fizz)) %>% t()
+  summarise(count_w_fizz=sum(fizz),Count_of_N = n(),"%_fizz"=sum(fizz)/n()) %>% t()
 
+n_flips <- 4
 ```
 
 Does tapping work?  
@@ -233,30 +236,60 @@ But this is rare.
 To think about this, we might consider the problem is much like a coin toss.
 And this is useful because we have a lot of knowledge about predicting coin flips.  
 
-##Coin flip example
+#Coin flip example
 
-If we flip a coin 10 times, or if we have 10 coins and flip them once, what is the chance that we'll have 10 heads or 10 tails?
+Understandably, you may feel uncomfortable thinking about stats and probability in an Intro psych class.  
 
-Here is a quick simulation of 10 coin flips (assuming a fair coin of .5)
+I don't want to teach you formulas, but I do want you to think about hypotheses and predictions.  
+
+If we flip a coin `r n_flips` times, or if we have `r n_flips` coins and flip them once, what is the chance that we'll have `r n_flips` heads or `r n_flips` tails?
+
+Here is a quick simulation of `r n_flips` coin flips (assuming a fair coin of .5)
 where the 'one' (1) represents heads and a zero (0) is tails.  
 
 ```{r simulate a single binomial outcome, echo=T}
-
-x<- rbinom(10,1,.5)
+x<- rbinom(n_flips,1,.5)
 x
 ```
 
-If we count up the number of heads and divide by the number of flips, we get `r sum(x)/10`.  
+Does this seem reasonable?  
+
+What if we did it again? 
+
+---
+
+```{r simulate a 2nd single binomial outcome, echo=T}
+x1<- rbinom(n_flips,1,.5)
+x1
+```
+
+Since these are randomly generated, it is possible we get the same number but it's also more likely that these 2 random flips of `r n_flips` coins are different.  
+
+If we count up the number of heads and divide by the number of flips, we get `r sum(x)/n_flips`.  
 
 How many of you were expecting exactly .5?
 Since this is a random process, we won't always get .5.
+
+Here is a quick graph to show you the count of 'heads' in these two trials:
+
+```{r graph two trials binomial outcome, echo=F,fig.dim=c(6,3),message=F}
+x.x1<- tibble(x,x1)
+x.x1
+
+x.x1 %>% gather(trial,value) %>% group_by(trial)  %>% 
+  ggplot(aes(x=trial,fill=trial,color=trial))+ geom_histogram(stat = 'count')#+facet_grid(~trial)
+#+
+ #   theme(axis.title.x=element_blank(),
+  #      axis.text.x=element_blank(),
+   #     axis.ticks.x=element_blank())
+```
 
 You may understand that if we did this many times, we'd get variations of these percentages but that they should be close to .5
 
 Can we try that?
 
 
-##Plotting of many simulated coin tosses
+#Plotting of many simulated coin tosses
 
 Let's say I build a random coin flipper and flip it many times.
 Here is some output:
@@ -299,7 +332,7 @@ So it is a way for us to think about what we should expect to get if our experim
 It's like asking this question:  Our experiment found a 8 vs 3 fizzes.  How often would we find that difference if this was all just random? 
 
 
-##Counting the number of 8 vs 3
+#Counting the number of 8 vs 3
 
 How many times did this random simulation match our No Tap condition of 8 and Tap condition of 3? 
 
@@ -341,7 +374,7 @@ head(count,10)
 
 Let's plot all the differences on the next slide.
 
-##Plotting these simulations
+#Plotting these simulations
 
 ```{r plot binomial simulations, echo=F,fig.dim=c(5,3),message=F}
 
@@ -360,7 +393,7 @@ Well, `r length(count[count$count>=5,])`.  I just used the computer to do this f
 
 This was the number of times in our random simulations that we found a difference greater than 5.  That's not very often. 
 
-##Back to the can
+#Back to the can
 
 What can this tell us about our soda can experiment?
 
@@ -387,4 +420,4 @@ In other words, the chances of finding this size difference is `r length(count[c
 
 
 
-##Experiment with fizz as an amount
+#Experiment with fizz as an amount
