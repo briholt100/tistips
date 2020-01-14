@@ -2,20 +2,24 @@
 title: "Soda Can experiment"
 author: "Brian Holt"
 date: "January 8, 2020"
-output: 
-  slidy_presentation:
-    font_adjustment: +3
+output:
+  beamer_presentation: default
+  highlight: monochrome
+  slidy_presentation: null
+df_print: kable
 ---
-
+install.packages("rmdformats")
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(knitr)
 library(tidyverse)
+
 ```
 
 #Introduction
 
 This is a simple thought experiment to demonstrate how to go through the steps of the scientific method.
+
 It's a silly example, that may have less relevance since soda bottles are more commonly sold in vending machines.
 
 But many of you may remember or have seen people prior to opening a soda can go through some sort of ritual of tapping on top of the soda can's opening.  
@@ -25,6 +29,7 @@ But many of you may remember or have seen people prior to opening a soda can go 
 A person claims that the reason they tap on the soda can's lid or opening is because it prevents an explosion.
 
 ![boom](https://media.giphy.com/media/58lJYJvosSVnW/giphy.gif)
+How can we evaluate this claim?
 
 ---
 
@@ -47,8 +52,8 @@ But it is the subject of what we do in an experiment.
 
 Turn to page 1 of your worksheet and write out the definitions.
 
-When you are finished just wait a bit for others to catch up.
-If your neighbors are still working, you can help if they ask.  
+|   When you are finished just wait a bit for others to catch up.
+|   If your neighbors are still working, you can help if they ask.  
 
 ---
 
@@ -56,11 +61,11 @@ If your neighbors are still working, you can help if they ask.
 
 On Page 2 of your worksheet, think about narratives. 
 
-How to tell a story?  
+<ins>How to tell a story?  </ins>
 
-Begin with the players and the problem.
+|   Begin with the players and the problem.
 
-In this case, what is apparently causing what?
+|   In this case, what is apparently causing what?
 
 Again, work on this individually but if others around you finish you can ask for help.  Feel free to offer help, as well.  
 
@@ -74,11 +79,11 @@ and just focusing on whether tapping on a can prevents fizz.
 
 So, maybe tapping on the can allows bubble in the soda to move to the top of the can so when the can is opened, the gas in the bubbles can escape with little mess.
 
-The story is saying implying the gas is distributed throughout a shooken can. 
+The story is implying the gas is distributed throughout a shooken can. 
 
-It is also implying that tapping on a can can move these gases around.  
+It is also implying that tapping on a can move these gases around.  
 
-If so, then if we tap on the some cans that have been shaken, but do not tap on other shooken cans, then we should see one of these groups produce more fizz than the other.  
+If so, if we tap on some of the cans that have been shaken, but do not tap on other shaken cans, then we should see one of these groups produce more fizz than the other.  
 
 
 #Groups or conditions.
@@ -124,9 +129,11 @@ And we often begin with at lest 2:
 
 \[H_a: \hspace{5pt} Group_1 \hspace{5pt} != \hspace{5pt}Group_2 \]
 
-note that != means not equal
+(note that != means not equal)
 
-Why do we make this sort of hypothesis? Why the Null? 
+Why do we make this sort of hypothesis? Why the Null?
+
+Simply, it's a way to establish boundary conditions.  
 
 #The Null
 
@@ -221,7 +228,7 @@ binomial.tap.df<- data.frame(tap,NoTap)
 binomial.tap.df %>% 
   gather(key='condition',value= "fizz") %>% 
   group_by(condition) %>% 
-  summarise(count_w_fizz=sum(fizz),Count_of_N = n(),"%_fizz"=sum(fizz)/n()) %>% t()
+  summarise(count_w_fizz=sum(fizz),Count_of_N = n(),"%_fizz"=sum(fizz)/n()) %>% t() %>% kable()
 
 n_flips <- 4
 ```
@@ -276,7 +283,7 @@ Here is a quick table and graph to show you the count of 'heads' in these two tr
 
 ```{r graph two trials binomial outcome, echo=F,fig.dim=c(6,3),message=F,warning=F}
 trials<- tibble(trial.1,trial.2)
-(trials)
+print(trials)
 
 trials %>% gather(trial,value) %>% group_by(trial)  %>%  
   ggplot(aes(x=trial,y=value))+ geom_col()+ylab("Total Num of Heads")
@@ -322,7 +329,7 @@ head(flip.df,3)
 #nrow(flip.df)
 ```
 
-So, this is just the top 3 simulations out of a `r printf(sims)` simulations.
+So, this is just the top 3 simulations out of a `r as.character(sims)` simulations.
 Each row has two simulations of flipping shaking a can 10 times.  
 
 The first row in the "NoTap"" group had `r flip.df[1,1]` cans that fizzed.
@@ -364,7 +371,7 @@ d.3 <- sum(dbinom(3:0,10,prob=.5))
 d.8*d.3
 ```
 
-Not too often. Out of `r sims`, there were just `r sum(count$count)` times that our NoTap had 8 or more fizzes and our Tap condition 3 or less fizzes.
+Not too often. Out of `r as.character(sims)`, there were just `r sum(count$count)` times that our NoTap had 8 or more fizzes and our Tap condition 3 or less fizzes.
 
 This means that if our null is true (that Tapping has no effect), then we would expect to find an out come (8 or more vs 3 or less) about `r sum(count$count)/sims` percent of time.
 
@@ -420,9 +427,9 @@ binomial.tap.df %>%
 ```
 
 But then we just made up some random simulations.
-And out of those `r sims` simulations we found `r length(count[count$count>=5,])` events that matched our little soda can experiment: `r (count[count$count>=5,])`
+And out of those `r as.character(sims)` simulations we found `r length(count[count$count>=5,])` events that matched our little soda can experiment: `r (count[count$count>=5,])`
 
-This is saying that out of a `r sims ` simulations, it is uncommon to find a difference of 5 or larger randomly.  In fact, it's simply 
+This is saying that out of a `r as.character(sims) ` simulations, it is uncommon to find a difference of 5 or larger randomly.  In fact, it's simply 
 
 \[\frac{diff's >= 5}{sims}\] 
 
