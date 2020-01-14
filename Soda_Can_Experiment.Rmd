@@ -248,8 +248,8 @@ Here is a quick simulation of `r n_flips` coin flips (assuming a fair coin of .5
 where the 'one' (1) represents heads and a zero (0) is tails.  
 
 ```{r simulate a single binomial outcome, echo=T}
-x<- rbinom(n_flips,1,.5)
-x
+trial.1<- rbinom(n_flips,1,.5)
+trial.1
 ```
 
 Does this seem reasonable?  
@@ -259,13 +259,13 @@ What if we did it again?
 #Another coin flip
 
 ```{r simulate a 2nd single binomial outcome, echo=T}
-x1<- rbinom(n_flips,1,.5)
-x1
+trial.2<- rbinom(n_flips,1,.5)
+trial.2
 ```
 
 Since these are randomly generated, it is possible we get the same number but it's also more likely that these 2 random flips of `r n_flips` coins are different.  
 
-If we count up the number of heads and divide by the number of flips, we get `r sum(x)/n_flips`.  
+If we count up the number of heads and divide by the number of flips, we get `r sum(trial.2)/n_flips`.  
 
 How many of you were expecting exactly .5?
 Since this is a random process, we won't always get .5.
@@ -275,11 +275,11 @@ Since this is a random process, we won't always get .5.
 Here is a quick table and graph to show you the count of 'heads' in these two trials:
 
 ```{r graph two trials binomial outcome, echo=F,fig.dim=c(6,3),message=F,warning=F}
-x.x1<- tibble(x,x1)
-(x.x1)
+trials<- tibble(trial.1,trial.2)
+(trials)
 
-x.x1 %>% gather(trial,value) %>% group_by(trial)  %>% summarise(total_Heads=sum(value)) %>% 
-  ggplot(aes(x=trial,y=total_Heads))+ geom_point(color='blue')+ylim(0,4)
+trials %>% gather(trial,value) %>% group_by(trial)  %>%  
+  ggplot(aes(x=trial,y=value))+ geom_col()+ylab("Total Num of Heads")
 
 ```
 
@@ -322,7 +322,7 @@ head(flip.df,3)
 #nrow(flip.df)
 ```
 
-So, this is just the top 3 simulations out of a `r sims` simulations.
+So, this is just the top 3 simulations out of a `r printf(sims)` simulations.
 Each row has two simulations of flipping shaking a can 10 times.  
 
 The first row in the "NoTap"" group had `r flip.df[1,1]` cans that fizzed.
@@ -347,7 +347,7 @@ for (i in 1:nrow(flip.df)){
   else {count[i,1] <- 0}
 }
 
-cbind(flip.df[1:5,],head(count$count,5))
+cbind(flip.df[1:5,],"count of 8 vs 3"=head(count$count,5))
 #head(flip.df[flip.df$NoTap>=8 & flip.df$Tap<=3,])
 ```
 
