@@ -3,9 +3,9 @@ title: "Soda Can experiment"
 author: "Brian Holt"
 date: "January 8, 2020"
 output:
-  beamer_presentation: default
-  highlight: monochrome
   slidy_presentation: null
+  highlight: monochrome
+  beamer_presentation: default
 df_print: kable
 ---
 install.packages("rmdformats")
